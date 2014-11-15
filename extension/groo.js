@@ -1,4 +1,4 @@
-var Groo = function(selector) {
+var Groo = function(selector, url) {
 	this.parent = null;
 	this.elemContentBox = null;
 	this.elemBtnSend = null;
@@ -12,6 +12,7 @@ var Groo = function(selector) {
 	this.server = '172.27.221.76:2333';
 	this.socket = null;
 	this.messages = [];
+  this.url = url;
 
 	this.testCount = 0;
 
@@ -58,7 +59,7 @@ Groo.prototype.initElements = function(selector) {
 		}
 	});
 
-	var url = window.location.href;
+	var url = this.url;
 	if (url.indexOf('test') >= 0) {
 		_.site = 'test';
 	} else if (url.indexOf('youtube') >= 0) {
@@ -72,10 +73,10 @@ Groo.prototype.initWebSocket = function() {
 	var 
 		_ = this;
 
-	_.socket = io('http://' + _.server + '/');
+	_.socket = io.connect('http://' + _.server + '/');
 	_.socket.on('connect', function() {
 		_.socket.emit('siteInfo', {
-			url: window.location.href
+			url: _.url
 		})
 		_.socket
 			.on('videoInfo', function(data) {
@@ -113,7 +114,6 @@ Groo.prototype.initWebSocket = function() {
 
 	setInterval(function() {
 		var item = _.messages[_.getPlayTime()];
-		console.log(item);
 		if (item) {
 			for (var i in item) {
 				_.generate(item[i].text, item[i].color);
@@ -159,7 +159,7 @@ Groo.prototype.send = function(content) {
 	var _ = this;
 	_.socket.emit('post message', {
 		id: _.videoId,
-		playTime: _.getPlayTime() + 3,
+		playTime: parseInt(_.getPlayTime()) + 1,
 		text: content,
 		color: "#fff"
 	});
@@ -172,20 +172,32 @@ Groo.prototype.getPlayTime = function() {
 		return _.testCount;
 	} else if (_.site == 'youtube') {
 		var slider = $('div[role="slider"]').eq(0);
-		console.log(slider.attr('aria-valuenow'));
+		//console.log(slider.attr('aria-valuenow'));
 		return slider.attr('aria-valuenow');
 	}
 	
 }
 
-$(document).ready(function() {
-	var location = window.location.href;
-	var selector = '';
-	if (location.indexOf('test') >= 0) {
-		selector = '#test-container';
-	} else if (location.indexOf('youtube') >= 0) {
-		selector = '#player-api';
-	}
+var selectors = {
+  "youtube": "#player-api",
+  "test": "#test-container"
+}
 
-	var groo = new Groo(selector);
+$(document).ready(function() {
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+    console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+
+    var location = request.url;
+    var currentSite = request.currentSite;
+
+    var selector = '';
+    if (currentSite in selectors) {
+      selector = selectors[currentSite];
+    }
+
+    var groo = new Groo(selector, location);
+  });
+
 });
