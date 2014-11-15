@@ -16,6 +16,18 @@
   },
 
   "background": {
-    "scripts": ["jquery-1.11.1.min.js", "background.js"]
-  }
+    "scripts": [
+      "jquery-1.11.1.min.js", 
+      "background.js"]
+  },
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "css": [
+      "groo.css"
+    ],
+    "js": [
+      "jquery-1.11.1.min.js",
+      "groo.js"
+    ]
+  }]
 }
