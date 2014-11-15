@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+</head>
+<body>
+ 
+  <script>
+    var socket = io('http://localhost:2333');
+    socket.on('state', function (data) {
+    });
+
+    socket.emit('siteInfo', {url: 'http://test.com'});
+
+    socket.on('videoInfo', function (data) {
+      console.log(data.allMessages);
+
+      socket.emit('post message',
+        {id: data.id,
+         playTime: 20,
+         text: 'sample test',
+         color: '#FFFFFF'});
+    });
+
+    socket.on('new message', function (data) {
+    });
+  </script>
+
+</body>
+</html>
