@@ -27,6 +27,7 @@
     ],
     "js": [
       "jquery-1.11.1.min.js",
+      "socket.io-1.2.0.js",
       "groo.js"
     ]
   }]
