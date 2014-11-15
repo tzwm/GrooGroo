@@ -10,24 +10,21 @@
   <script>
     var socket = io('http://localhost:2333');
     socket.on('state', function (data) {
-      alert(data);
     });
 
-    socket.emit('siteInfo', {url: 'http://google.com'});
+    socket.emit('siteInfo', {url: 'http://test.com'});
 
     socket.on('videoInfo', function (data) {
-      alert(data.id);
-      alert(data.allMessages[0].text);
+      console.log(data.allMessages);
+
+      socket.emit('post message',
+        {id: data.id,
+         playTime: 20,
+         text: 'sample test',
+         color: '#FFFFFF'});
     });
 
-    socket.emit('post message',
-        {id: 1,
-         playTime: 20,
-         text: 'from client',
-         color: '#FFFFFF'});
-
     socket.on('new message', function (data) {
-      alert(data.text);
     });
   </script>
 
