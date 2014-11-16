@@ -22,7 +22,7 @@ var Groo = function(selector, url) {
 
 Groo.prototype.initElements = function(selector) {
 
-	var template = '<div id="groo"><div class="groo-post-form"><div class="color-picker"><div class="current-color"></div><ul class="color-list"><li class="color-list-item"></li><li class="color-list-item"></li><li class="color-list-item"></li><li class="color-list-item"></li></ul></div><input class="message" type="text"><button class="btn-send">Send</button></div></div>';
+	var template = '<div id="groo"><div class="groo-post-form"><div class="color-picker"><div class="current-color"></div><ul class="color-list"><li class="color-list-item"></li><li class="color-list-item"></li><li class="color-list-item"></li><li class="color-list-item"></li></ul></div><input class="message" type="text"><button class="btn-send">Send</button><input class="color" type="text" placeholder="#FFFFFF"/><div class="color-display"></div></div></div>';
 	
 	var 
 		_ = this,
@@ -37,6 +37,8 @@ Groo.prototype.initElements = function(selector) {
 	_.elemContentBox = _.parent.find('.message').eq(0);
 	_.elemColorList = _.parent.find('.color-list').eq(0);
 	_.elemCurrentColor = _.parent.find('.current-color').eq(0);
+  _.elemColor = _.parent.find('.color').eq(0);
+  _.elemColorPreview = _.parent.find('.color-display').eq(0);
 
 	_.parent.css({
 		width: _.width,
@@ -48,6 +50,16 @@ Groo.prototype.initElements = function(selector) {
 		_.send(_.elemContentBox.val());
 		_.elemContentBox.val('');
 	});
+
+  _.elemColor.change(function() {
+    var colorPattern = /#[a-zA-Z0-9]{6}/;
+    var currentColor = _.elemColor.val();
+    if (!colorPattern.test(currentColor)) {
+      currentColor = '#FFFFFF';
+    }
+    _.elemColorPreview.css({'background-color': currentColor});
+    _.currentColor = currentColor;
+  });
 
 	_.elemCurrentColor.click(function() {
 		var clicked = $(this).data('clicked');
@@ -162,7 +174,7 @@ Groo.prototype.send = function(content) {
 		id: _.videoId,
 		playTime: _.getPlayTime() + 1,
 		text: content,
-		color: "#fff"
+		color: _.currentColor
 	});
 }
 
