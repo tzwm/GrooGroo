@@ -12,7 +12,7 @@ var Groo = function(selector, url) {
 	this.server = '172.27.221.76:2333';
 	this.socket = null;
 	this.messages = [];
-  this.url = url;
+  	this.url = url;
 
 	this.testCount = 0;
 
@@ -21,6 +21,7 @@ var Groo = function(selector, url) {
 };
 
 Groo.prototype.initElements = function(selector) {
+
 	var template = '<div id="groo"><div class="groo-post-form"><div class="color-picker"><div class="current-color"></div><ul class="color-list"><li class="color-list-item"></li><li class="color-list-item"></li><li class="color-list-item"></li><li class="color-list-item"></li></ul></div><input class="message" type="text"><button class="btn-send">Send</button></div></div>';
 	
 	var 
@@ -59,7 +60,7 @@ Groo.prototype.initElements = function(selector) {
 		}
 	});
 
-	var url = this.url;
+	var url = _.url;
 	if (url.indexOf('test') >= 0) {
 		_.site = 'test';
 	} else if (url.indexOf('youtube') >= 0) {
@@ -159,7 +160,7 @@ Groo.prototype.send = function(content) {
 	var _ = this;
 	_.socket.emit('post message', {
 		id: _.videoId,
-		playTime: parseInt(_.getPlayTime()) + 1,
+		playTime: _.getPlayTime() + 1,
 		text: content,
 		color: "#fff"
 	});
@@ -173,7 +174,7 @@ Groo.prototype.getPlayTime = function() {
 	} else if (_.site == 'youtube') {
 		var slider = $('div[role="slider"]').eq(0);
 		//console.log(slider.attr('aria-valuenow'));
-		return slider.attr('aria-valuenow');
+		return parseInt(slider.attr('aria-valuenow'));
 	}
 	
 }
@@ -184,6 +185,7 @@ var selectors = {
 }
 
 $(document).ready(function() {
+	var groo = null;
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     console.log(sender.tab ?
                 "from a content script:" + sender.tab.url :
@@ -197,7 +199,9 @@ $(document).ready(function() {
       selector = selectors[currentSite];
     }
 
-    var groo = new Groo(selector, location);
+    if (groo == null) {
+    	groo = new Groo(selector, location);
+    }
   });
 
 });
