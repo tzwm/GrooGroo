@@ -54,10 +54,6 @@ io.on('connection', function (socket) {
           }
           console.log('save ' + product.url);
 
-          allMessages = [];
-          for ( var messageId in product.messages) {
-
-          }
           socket.emit('videoInfo', {
             id: product._id,
             allMessages: product.messages
@@ -98,6 +94,7 @@ io.on('connection', function (socket) {
           return;
         }
 
+        console.log('new message ' + video.url + ' ' + newMessage.text);
         video.messages.push(newMessage);
         video.save(function (err) {
           if (err) {
@@ -112,6 +109,6 @@ io.on('connection', function (socket) {
       });
     });
   });
-});
 
+});
 
