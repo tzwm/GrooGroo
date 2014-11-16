@@ -40,8 +40,8 @@ Groo.prototype.initElements = function(selector) {
 
 	_.parent.css({
 		width: _.width,
-		'padding-top': _.height,
-		margin: $container.css('margin')
+		'margin-top': _.height
+		// margin: $container.css('margin')
 	});
 
 	_.elemBtnSend.on('click', function(){
@@ -142,7 +142,7 @@ Groo.prototype.generate = function(content, color) {
 		$newItem
 			.css({
 				left: _.width,
-				top: Math.floor(Math.random() * (_.height / 5 * 4)),
+				top: -Math.floor(Math.random() * (_.height - 40)),
 				color: color
 			})
 			.animate({
@@ -151,7 +151,7 @@ Groo.prototype.generate = function(content, color) {
 			easeTime, 
 			eastType,
 			function() {
-				// $(this).remove();
+				$(this).remove();
 			});
 	}
 };
