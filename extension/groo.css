@@ -68,3 +68,16 @@
 	white-space: nowrap;
 	vertical-align: middle;
 }
+
+.groo-post-form .color {
+  width: 60px;
+  padding: 3px;
+  margin-left: 10px;
+}
+
+.groo-post-form .color-display {
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  background-color: #FFFFFF;
+}
