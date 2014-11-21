@@ -9,7 +9,7 @@ var Groo = function(selector, url) {
 
 	this.videoId = 0;
 	this.site = '';
-	this.server = '172.27.221.76:2333';
+	this.server = '';
 	this.socket = null;
 	this.messages = [];
   	this.url = url;
