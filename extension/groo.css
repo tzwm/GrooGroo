@@ -1,72 +1,44 @@
-#test-container {
-	position: relative;
-}
-
 #groo {
-	position: absolute;
-	left: 0;
-	top: 0;
-	overflow-x: hidden;
-	overflow-y: visible;
-	z-index: 1000;
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow-x: hidden;
+  overflow-y: visible;
+  z-index: 1000;
 }
 
 .groo-item {
-	position: absolute;
-	font-size: 25px;
-	line-height: 20px;
+  position: absolute;
+  font-size: 25px;
+  line-height: 20px;
+  z-index: 1000;
 }
 
 .groo-post-form {
-	zoom: 1;
+  zoom: 1;
 }
 
 .groo-post-form * {
-	display: block;
-	float: left;
-}
-
-.groo-post-form .current-color {
-	display: none;
-	border: 1px solid #000;
-	width: 20px;
-	height: 20px;
-}
-
-.groo-post-form .color-list {
-	display: none;
-	position: absolute;
-	margin: 0;
-	padding: 5px;
-	border: 1px solid #000;
-}
-
-.groo-post-form .color-list-item {
-	border: 1px solid #000;
-	width: 20px;
-	height: 20px;
-}
-
-.groo-post-form .color-list-item + .color-list-item {
-	margin-left: 10px;
+  display: block;
+  float: left;
 }
 
 .groo-post-form .message {
-	width: 300px;
-	padding: 3px;
+  width: 300px;
+  padding: 3px;
 }
 
 .groo-post-form .btn-send {
-	display: inline-block;
-	padding: 4px 8px;
-	margin-bottom: 0;
-	color: #fff;
-	background-color: #428bca;
-	border: 1px solid transparent;
-	border-radius: 3px;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: middle;
+  display: inline-block;
+  padding: 4px 8px;
+  margin-bottom: 0;
+  color: #fff;
+  background-color: #428bca;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
 }
 
 .groo-post-form .color {
